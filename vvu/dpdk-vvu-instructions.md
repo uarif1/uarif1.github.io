@@ -8,14 +8,14 @@ of device type called virtio-vhost-user. Further information can be found at
 https://wiki.qemu.org/Features/VirtioVhostUser
 
 This page outlines the steps to recreate a setup showcasing virtio-vhost-user with DPDK
-testpmd app. The patches for vvu are on top of DPDK v22.03 and QEMU v7.0.0-rc1.
+testpmd app. The patches for vvu are on top of DPDK v22.03 and QEMU v7.0.50.
 
 ### 1. Clone the repositories
 ```
 mkdir vvu
 cd vvu
 
-git clone git@github.com:uarif1/qemu.git qemu -b vvu
+git clone git@github.com:uarif1/qemu.git qemu -b vvu_7.0.50
 git clone git@github.com:uarif1/dpdk.git dpdk -b vvu
 ```
 
@@ -28,7 +28,7 @@ meson build; ninja -C build
 # Build QEMU
 cd ../qemu
 mkdir build/; cd build
-../configure --target-list=x86_64-softmmu --enable-virtio-vhost-user; make -j40
+../configure --target-list=x86_64-softmmu; make -j40
 ```
 
 ### 3. Launch the "Backend VM" with the virtio-vhost-user device backend
@@ -53,7 +53,6 @@ scp -P 10024 ./dpdk/build/app/dpdk-testpmd root@localhost:/root/
 scp -P 10024 ./dpdk/usertools/dpdk-devbind.py root@localhost:/root/
 
 ```
-
 
 ### 5. Bind the devices and launch the DPDK testpmd app in the Backend VM
 ```
